@@ -1,0 +1,52 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Приклад відео на YouTube з кількістю переглядів
+        int[] views = { 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000 };
+        int targetViews = 600; // Кількість переглядів, яку ми шукаємо
+
+        int index = ExponentialSearch(views, targetViews);
+
+        if (index != -1)
+        {
+            Console.WriteLine($"Відео з {targetViews} переглядами знаходиться під індексом: {index}");
+        }
+        else
+        {
+            Console.WriteLine($"Відео з {targetViews} переглядами не знайдено.");
+        }
+    }
+
+    static int ExponentialSearch(int[] arr, int target)
+    {
+        if (arr[0] == target)
+            return 0;
+
+        int i = 1;
+        while (i < arr.Length && arr[i] <= target)
+            i *= 2;
+
+        return BinarySearch(arr, i / 2, Math.Min(i, arr.Length - 1), target);
+    }
+
+    static int BinarySearch(int[] arr, int left, int right, int target)
+    {
+        while (left <= right)
+        {
+            int mid = left + (right - left) / 2;
+
+            if (arr[mid] == target)
+                return mid;
+
+            if (arr[mid] < target)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+
+        return -1;
+    }
+}
